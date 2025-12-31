@@ -16,3 +16,8 @@
     
 6. What does the order lifecycle look like from customer order to shipment? 
    - Query: [06-order-lifecycle.sql](06-order-lifecycle.sql)
+
+7. How does the sales revenue compare to the vendor cost?
+   - Query:
+  
+**[Full Data](../data/)**
