@@ -9,9 +9,13 @@
 - **Complex JOIN queries** revealing supply chain insights
 - **Realistic sample data** (customers, vendors, shipments from JP/KR/TH→US)
 
-## Results
-### Business Value
-
+## Business Metrics
+| Metric           | Value                          | Query        |
+|------------------|--------------------------------|--------------|
+| Total Shipments  | 10 (4 Delivered, 3 In Transit) | shipments    |
+| Revenue          | $98,250                        | sales_orders |
+| Invoices         | $5,656 (2 Open)                | invoices     |
+| On-Time Delivery | 75%                            | `shipments`  |
 
 
 
