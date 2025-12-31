@@ -1,0 +1,4 @@
+customer,vendor,so_number,order_date,sales_amount,po_number,purchase_amount
+"Peachy Spa","Sakamoto Noodles",SO-2025-0001,2025-01-03,18750.00,PO-2025-0001,11900.00
+"Ranch 88","Topok Express",SO-2025-0002,2025-02-10,57000.00,PO-2025-0002,37320.00
+"Shinjuku Stars","Rama Wellness",SO-2025-0003,2025-03-01,22500.00,PO-2025-0003,14808.00
