@@ -1,0 +1,11 @@
+customer,shipment_no,origin_city,origin_unlo_code,destination_city,dest_unlo_code,mode,status
+"Ranch 88",SHP-2025-0001,Tokyo,JPTYO,"Los Angeles",USLAX,ocean,Delivered
+"Ranch 88",SHP-2025-0002,Tokyo,JPTYO,"Los Angeles",USLAX,air,Delivered
+"Ranch 88",SHP-2025-0003,Tokyo,JPTYO,"Los Angeles",USLAX,ocean,"In Transit"
+"Shinjuku Stars",SHP-2025-0004,Tokyo,JPTYO,"Los Angeles",USLAX,ocean,"Customs Hold"
+"Shinjuku Stars",SHP-2025-0005,Bangkok,THBKK,"Los Angeles",USLAX,air,Delivered
+"Shinjuku Stars",SHP-2025-0006,Bangkok,THBKK,"Los Angeles",USLAX,ocean,Planned
+"Peachy Spa",SHP-2025-0007,Bangkok,THBKK,"Los Angeles",USLAX,ocean,"In Transit"
+"Peachy Spa",SHP-2025-0008,Seoul,KRSEL,"Los Angeles",USLAX,air,Delivered
+"Peachy Spa",SHP-2025-0009,Seoul,KRSEL,"Los Angeles",USLAX,ocean,"In Transit"
+"Peachy Spa",SHP-2025-0010,Seoul,KRSEL,"Los Angeles",USLAX,air,Cancelled

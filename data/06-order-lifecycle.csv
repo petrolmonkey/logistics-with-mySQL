@@ -1,0 +1,11 @@
+sales_order_id,customer_order,sales_status,customer,po_number,po_status,vendor,shipment_no,shipment_status
+1,SO-2025-0001,OPEN,"Peachy Spa",PO-2025-0001,OPEN,"Sakamoto Noodles",SHP-2025-0007,"In Transit"
+1,SO-2025-0001,OPEN,"Peachy Spa",PO-2025-0001,OPEN,"Sakamoto Noodles",SHP-2025-0008,Delivered
+1,SO-2025-0001,OPEN,"Peachy Spa",PO-2025-0001,OPEN,"Sakamoto Noodles",SHP-2025-0009,"In Transit"
+1,SO-2025-0001,OPEN,"Peachy Spa",PO-2025-0001,OPEN,"Sakamoto Noodles",SHP-2025-0010,Cancelled
+2,SO-2025-0002,OPEN,"Ranch 88",PO-2025-0002,OPEN,"Topok Express",SHP-2025-0001,Delivered
+2,SO-2025-0002,OPEN,"Ranch 88",PO-2025-0002,OPEN,"Topok Express",SHP-2025-0002,Delivered
+2,SO-2025-0002,OPEN,"Ranch 88",PO-2025-0002,OPEN,"Topok Express",SHP-2025-0003,"In Transit"
+3,SO-2025-0003,OPEN,"Shinjuku Stars",PO-2025-0003,OPEN,"Rama Wellness",SHP-2025-0004,"Customs Hold"
+3,SO-2025-0003,OPEN,"Shinjuku Stars",PO-2025-0003,OPEN,"Rama Wellness",SHP-2025-0005,Delivered
+3,SO-2025-0003,OPEN,"Shinjuku Stars",PO-2025-0003,OPEN,"Rama Wellness",SHP-2025-0006,Planned

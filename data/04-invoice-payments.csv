@@ -1,0 +1,6 @@
+vendor,invoice_number,invoice_date,invoice_amount,invoice_status,reference_num,payment_date,payment_amount
+"Rama Wellness",INV-2025-0002,2025-01-16,1950.75,CLOSED,ACH-TRC-568853,2025-01-25,1950.75
+"Rama Wellness",INV-2025-0005,2025-01-29,2375.90,OPEN,NULL,NULL,NULL
+"Sakamoto Noodles",INV-2025-0004,2025-01-20,1125.40,CLOSED,CHK-12049,2025-01-28,1125.40
+"Sakamoto Noodles",INV-2025-0001,2025-02-03,4820.50,CLOSED,CHK-12048,2025-02-10,4820.50
+"Topok Express",INV-2025-0003,2025-02-13,3280.00,OPEN,WIRE-REF-001,2025-02-20,1500.00

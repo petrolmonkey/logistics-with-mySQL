@@ -1,0 +1,6 @@
+shipment_id,shipment_no,mode,shipment_status,vendor,invoice_number,invoice_date,amount,invoice_status
+1,SHP-2025-0001,ocean,Delivered,"Sakamoto Noodles",INV-2025-0001,2025-02-03,4820.50,CLOSED
+2,SHP-2025-0002,air,Delivered,"Rama Wellness",INV-2025-0002,2025-01-16,1950.75,CLOSED
+4,SHP-2025-0004,ocean,"Customs Hold","Topok Express",INV-2025-0003,2025-02-13,3280.00,OPEN
+5,SHP-2025-0005,air,Delivered,"Sakamoto Noodles",INV-2025-0004,2025-01-20,1125.40,CLOSED
+8,SHP-2025-0008,air,Delivered,"Rama Wellness",INV-2025-0005,2025-01-29,2375.90,OPEN
