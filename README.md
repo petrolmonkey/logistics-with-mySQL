@@ -1,9 +1,22 @@
-# Logistics Database
+# Asian Imports Logistics - Database Design
 
-## Objective
-To create a database with linked tables that account for the movement of goods across the Pacific.
+**A production ready logistics database for for the movement of goods across the Pacific** modeling the complete supply chain: **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**.
 
-## Sample Result: Shipment Status
+## Key Features 
+- **Normalized schema** (6NF) with 11 interconnected tables
+- **Foreign key relationships** enforcing data integrity
+- **Business logic** via generated columns, enums, constraints
+- **Complex JOIN queries** revealing supply chain insights
+- **Realistic sample data** (customers, vendors, shipments from JP/KR/TH→US)
+
+## Results
+### Business Value
+
+
+
+
+
+### Shipment Status
 | customer       | shipment_no   | origin_city | origin_unlo_code | destination_city | dest_unlo_code | mode  | status       |
 |----------------|---------------|-------------|------------------|------------------|----------------|-------|--------------|
 | Ranch 88       | SHP-2025-0001 | Tokyo       | JPTYO            | Los Angeles      | USLAX          | ocean | Delivered    |
