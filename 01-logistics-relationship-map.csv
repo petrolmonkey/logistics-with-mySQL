@@ -1,0 +1,13 @@
+child_table,child_column,CONSTRAINT_NAME,parent_table,parent_column
+invoices,shipment_ID,FK_shipment,shipments,shipment_id
+invoices,vendor_id,FK_vendor,vendors,vendor_id
+locations,country_ID,FK_country,countries,country_ID
+payments,invoice_id,FK_invoice,invoices,invoice_id
+purchase_orders,vendor_id,FK_po_vendor,vendors,vendor_id
+sales_orders,customer_id,FK_sales_customer,customers,customer_id
+sales_orders,po_id,FK_po_id,purchase_orders,po_id
+sales_orders,shipment_id,FK_sales_shipment,shipments,shipment_id
+shipment_documents,shipment_id,FK_ship_docs_shipments,shipments,shipment_id
+shipments,customer_id,FK_customer,customers,customer_id
+shipments,destination_location_id,FK_destination,locations,location_ID
+shipments,origin_location_id,FK_origin,locations,location_ID
