@@ -1,6 +1,6 @@
 # Asian Imports Logistics - Database Design
 
-**A production ready logistics database for for the movement of goods across the Pacific** modeling the complete supply chain: **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**.
+**A production ready logistics database for modeling the supply chain and complete business lifecycle: **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**.
 
 ## Key Features 
 - **Normalized schema** (6NF) with 11 interconnected tables
@@ -9,15 +9,15 @@
 - **Complex JOIN queries** revealing supply chain insights
 - **Realistic sample data** (customers, vendors, shipments from JP/KR/TH→US)
 
-## Business Metrics
-| Metric           | Value                          | Query        |
+## Business Metrics at a Glance
+| Metric           | Value                          | Table        |
 |------------------|--------------------------------|--------------|
 | Total Shipments  | 10 (4 Delivered, 3 In Transit) | `shipments`    |
 | Revenue          | $98,250                        | `sales_orders` |
 | Invoices         | $5,656 (2 Open)                | `invoices`     |
 | On-Time Delivery | 75%                            | `shipments`  |
 
-### Customer Revenue
+### Sample Queries: Customer Revenue
 | customer       | vendor           | so_number    | order_date | sales_amount | po_number    | purchase_amount |
 |----------------|------------------|--------------|------------|--------------|--------------|-----------------|
 | Peachy Spa     | Sakamoto Noodles | SO-2025-0001 | 2025-01-03 |     18750.00 | PO-2025-0001 |        11900.00 |
@@ -26,7 +26,7 @@
 
 **Query:** [07-customer-revenue.sql](./queries/07-customer-revenue.sql)
 
-### Shipment Status
+### Sample Queries: Shipment Status
 | customer       | shipment_no   | origin_city | origin_unlo_code | destination_city | dest_unlo_code | mode  | status       |
 |----------------|---------------|-------------|------------------|------------------|----------------|-------|--------------|
 | Ranch 88       | SHP-2025-0001 | Tokyo       | JPTYO            | Los Angeles      | USLAX          | ocean | Delivered    |
