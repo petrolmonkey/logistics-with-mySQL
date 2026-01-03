@@ -8,6 +8,8 @@
 - **Business logic** via generated columns, enums, constraints
 - **Complex JOIN queries** revealing supply chain insights
 - **Realistic sample data** (customers, vendors, shipments from JP/KR/TH→US)
+- **Built with MySQL Workbench 8.0
+
 
 ## Business Metrics at a Glance
 | Metric           | Value                          | Table        |
@@ -26,6 +28,7 @@
 
 **Query:** [07-customer-revenue.sql](./queries/07-customer-revenue.sql)
 
+
 ### Sample Queries: Shipment Status
 | customer       | shipment_no   | origin_city | origin_unlo_code | destination_city | dest_unlo_code | mode  | status       |
 |----------------|---------------|-------------|------------------|------------------|----------------|-------|--------------|
@@ -37,5 +40,14 @@
 
 **Query:** [02-customer-shipments.sql](./queries/02-customer-shipments.sql)
 
+## Quick Start
+1. `git clone https://github.com/yourusername/asian-imports-logistics.git`
+2. MySQL → `source schema/schema.sql`
+3. Run `queries/02-customer-shipments.sql` → See results!
 
-**[Run schema→](./schema/asian-import-database.sql)** | **[Explore queries →](./queries/)**
+
+## Explore 
+- **[Run schema→](./schema/asian-import-database.sql)**
+- **[Explore queries →](./queries/)**
+- **[CSV Exports](./data/)**
+- **[ERD →](./screenshots/ERD-asian-logistics-rev1.png)**
