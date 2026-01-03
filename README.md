@@ -8,7 +8,7 @@
 - **Business logic** via generated columns, enums, constraints
 - **Complex JOIN queries** revealing supply chain insights
 - **Realistic sample data** (customers, vendors, shipments from JP/KR/TH→US)
-- **Built with MySQL Workbench 8.0
+- **Built with MySQL Workbench 8.0**
 
 
 ## Business Metrics at a Glance
@@ -41,7 +41,7 @@
 **Query:** [02-customer-shipments.sql](./queries/02-customer-shipments.sql)
 
 ## Quick Start
-1. `git clone https://github.com/yourusername/asian-imports-logistics.git`
+1. `git clone https://github.com/petrolmonkey/logistics-with-mySQL.git`
 2. MySQL → `source schema/schema.sql`
 3. Run `queries/02-customer-shipments.sql` → See results!
 
