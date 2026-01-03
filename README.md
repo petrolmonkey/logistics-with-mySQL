@@ -3,7 +3,7 @@
 **A production ready logistics database for modeling the supply chain and complete business lifecycle: **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**.
 
 ## Key Features 
-- **Normalized schema** (6NF) with 11 interconnected tables
+- **Normalized schema** with 10 interconnected tables
 - **Foreign key relationships** enforcing data integrity
 - **Business logic** via generated columns, enums, constraints
 - **Complex JOIN queries** revealing supply chain insights
