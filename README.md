@@ -3,7 +3,7 @@
 **A production ready logistics database for modeling the supply chain and complete business lifecycle: **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**.
 
 ## Key Features 
-- **Normalized schema** with 10 interconnected tables
+- **Normalized schema** 3NF with 10 interconnected tables
 - **Foreign key relationships** enforcing data integrity
 - **Business logic** via generated columns, enums, constraints
 - **Complex JOIN queries** revealing supply chain insights
@@ -41,13 +41,14 @@
 **Query:** [02-customer-shipments.sql](./queries/02-customer-shipments.sql)
 
 ## Quick Start
-1. `git clone https://github.com/petrolmonkey/logistics-with-mySQL.git`
-2. MySQL → `source schema/schema.sql`
-3. Run `queries/02-customer-shipments.sql` → See results!
+1. Clone repo  → `git clone https://github.com/petrolmonkey/logistics-with-mySQL.git`
+2. MySQL       → `mysql -u root -p`
+3. Run schema  → `source schema/asian_import_database.sql;`
+4. Run query   → `source queries/02-customer-shipments.sql;` → See results!
 
 
 ## Explore 
-- **[Run schema→](./schema/asian-import-database.sql)**
-- **[Explore queries →](./queries/)**
+- **[Create Tables→](./schema/asian-import-database.sql)**
+- **[Explore Queries →](./queries/)**
 - **[CSV Exports](./data/)**
 - **[ERD →](./screenshots/ERD-asian-logistics-rev1.png)**
