@@ -1,6 +1,7 @@
 # Asian Imports Logistics - Database Design
 
-**A production ready logistics database for modeling the supply chain and complete business lifecycle: **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**.
+**A production ready logistics database for modeling the supply chain and complete business lifecycle:** 
+**Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**
 
 ## Key Features 
 - **Normalized schema** 3NF with 10 interconnected tables
@@ -48,7 +49,7 @@
 
 
 ## Explore 
-- **[Create Tables→](./schema/asian-import-database.sql)**
+- **[Create Tables→](./schema/asian_import_database.sql)**
 - **[Explore Queries →](./queries/)**
 - **[CSV Exports](./data/)**
 - **[ERD →](./screenshots/ERD-asian-logistics-rev1.png)**
