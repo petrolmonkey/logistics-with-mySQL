@@ -1,4 +1,4 @@
-# Asian Imports Logistics - Database Design
+# Logistics - Database Design
 
 **A production ready logistics database for modeling the supply chain and complete business lifecycle:** 
 **Customers → Sales Orders → Purchase Orders → Vendors → Shipments → Invoices → Payments → Documents**
