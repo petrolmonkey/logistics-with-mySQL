@@ -2,7 +2,42 @@ DROP DATABASE IF EXISTS asian_imports;
 CREATE DATABASE asian_imports;
 USE asian_imports;
 
+/****************************************************************************************
+						Airflow Shipment ETL Errors Table
+****************************************************************************************/
+CREATE TABLE IF NOT EXISTS shipment_errors (
+	ship_error_id			INT AUTO_INCREMENT PRIMARY KEY,
+    shipment_id 			VARCHAR(100),
+    customer_id 			VARCHAR(100),
+    origin_location_id 		VARCHAR(100),
+    destination_location_id VARCHAR(100),
+    shipment_no 			VARCHAR(100),
+    mode 					VARCHAR(100),
+    incoterms 				VARCHAR(100),
+    planned_ship_date 		VARCHAR(100), 
+    planned_deliver_date 	VARCHAR(100),
+    actual_ship_date 		VARCHAR(100),
+    actual_deliver_date 	VARCHAR(100),
+    status					VARCHAR(100), 
+    total_packages 			VARCHAR(100),
+    total_weight 			VARCHAR(100),
+    weight_uom 				VARCHAR(100),
+    batch_id				VARCHAR(50),
+	run_date				TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	error_reason			VARCHAR(100)
+    
+) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS airflow_failure_logs (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	dag_id VARCHAR(255),
+	task_id VARCHAR(255),
+	execution_date TIMESTAMP,
+	failure_reason TEXT,
+	task_instance_state VARCHAR(50),
+	retry_count INT,
+    failure_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); 
 /****************************************************************************************
 									Customers Table
 ****************************************************************************************/
@@ -17,7 +52,7 @@ CREATE TABLE customers (
     city             VARCHAR(50),
     state_region     VARCHAR(50),
     postal_code      VARCHAR(20),
-    country_code     CHAR(2),       -- ISO 3166-1 alpha-2
+    country_code     CHAR(2) NOT NULL,       -- ISO 3166-1 alpha-2
     email            VARCHAR(100),
     phone            VARCHAR(20),
     customer_type    ENUM('IMPORTER','RETAILER','MANUFACTURER','DISTRIBUTOR','OTHER')
@@ -58,18 +93,18 @@ INSERT INTO countries (country_ID, iso2_code, country_name, region) VALUES
 	(3100, "US", "United States of America", "North America"), 
     (3201, "JP", "Japan", "Asia"),
     (3202, "KR", "South Korea", "Asia"),
-    (3203, "TH", "Thailand", "Asia");
-
+    (3203, "TH", "Thailand", "Asia"),
+	(3204, "TW", "Taiwan", "Asia");
 /****************************************************************************************
 									Locations Table
 ****************************************************************************************/
 
 DROP TABLE IF EXISTS locations;
 CREATE TABLE locations (
-	location_ID 	INT PRIMARY KEY,
-	location_name 	VARCHAR(20),
+	location_ID 	INT PRIMARY KEY NOT NULL,
+	location_name 	VARCHAR(20) NOT NULL,
     unlocode 		CHAR(5),
-    country_ID 		INT,
+    country_ID 		INT NOT NULL,
     timezone 		VARCHAR(20), 
     CONSTRAINT FK_country FOREIGN KEY (country_ID) REFERENCES countries(country_ID)
 );
@@ -78,8 +113,8 @@ INSERT INTO locations (location_ID, location_name, unlocode, country_ID, timezon
 	(1001, "Los Angeles", "USLAX", 3100, "PST"),
 	(2001, "Tokyo", "JPTYO", 3201, "JST"),
     (3001, "Bangkok", "THBKK", 3203, "ICT"),
-    (4001, "Seoul", "KRSEL", 3202, "KST");
-  
+    (4001, "Seoul", "KRSEL", 3202, "KST"),
+    (5001, "Taiwan", "TWTPE", 3204, "CST");
 
 /****************************************************************************************
 									Shipments Table
@@ -89,18 +124,18 @@ INSERT INTO locations (location_ID, location_name, unlocode, country_ID, timezon
 
 DROP TABLE IF EXISTS shipments;
 CREATE TABLE shipments (
-	shipment_id 			INT PRIMARY KEY,
-    customer_id 			INT,
-    origin_location_id 		INT, 
-    destination_location_id INT, 
-    shipment_no 			VARCHAR(20), 
-    mode 					ENUM("ocean", "air"), 
-    incoterms 				ENUM("EXW", "FCA", "FOB", "CIF", "DDP"), 
-    planned_ship_date 		DATE, 
+	shipment_id 			INT PRIMARY KEY NOT NULL,
+    customer_id 			INT NOT NULL,
+    origin_location_id 		INT NOT NULL, 
+    destination_location_id INT NOT NULL, 
+    shipment_no 			VARCHAR(20) NOT NULL, 
+    mode 					ENUM("ocean", "air") NOT NULL, 
+    incoterms 				ENUM("EXW", "FCA", "FOB", "CIF", "DDP") NOT NULL, 
+    planned_ship_date 		VARCHAR(20), 
     planned_deliver_date 	DATE, 
     actual_ship_date 		DATE, 
     actual_deliver_date 	DATE, 
-    status					ENUM("Planned", "In Transit", "Customs Hold", "Delivered", "Cancelled"), 
+    status					ENUM("Planned", "In Transit", "Customs Hold", "Delivered", "Cancelled") NOT NULL, 
     total_packages 			INT, 
     total_weight 			FLOAT, 
     weight_uom 				CHAR(3),
@@ -115,15 +150,14 @@ INSERT INTO shipments (shipment_id, customer_id, origin_location_id, destination
 
 (1,  100, 2001,  1001, 'SHP-2025-0001', 'ocean', 'FOB', '2025-01-05', '2025-02-02', '2025-01-05', '2025-02-01', 'Delivered',     520, 10850.0, 'KG'),
 (2,  100, 2001,  1001, 'SHP-2025-0002', 'air',   'CIF', '2025-01-08', '2025-01-15', '2025-01-09', '2025-01-16', 'Delivered',      24,   980.5, 'KG'),
-(3,  100, 2001,  1001, 'SHP-2025-0003', 'ocean', 'FOB', '2025-01-10', '2025-02-05', '2025-01-11', NULL,         'In Transit',    310,  7200.0, 'KG'),
+(3,  100, 2001,  1001, 'SHP-2025-0003', 'ocean', 'FOB', '2025-01-01', '2025-02-05', '2025-01-11', NULL,         'In Transit',    310,  7200.0, 'KG'),
 (4,  200, 2001,  1001, 'SHP-2025-0004', 'ocean', 'CIF', '2025-01-12', '2025-02-09', '2025-01-13', '2025-02-12', 'Customs Hold',  180,  4550.0, 'KG'),
 (5,  200, 3001,  1001, 'SHP-2025-0005', 'air',   'FCA', '2025-01-15', '2025-01-20', '2025-01-15', '2025-01-19', 'Delivered',      12,   430.0, 'KG'),
 (6,  200, 3001,  1001, 'SHP-2025-0006', 'ocean', 'FOB', '2025-01-18', '2025-02-14', NULL,         NULL,         'Planned',       640, 13200.0, 'KG'),
 (7,  300, 3001,  1001, 'SHP-2025-0007', 'ocean', 'CIF', '2025-01-20', '2025-02-18', '2025-01-21', NULL,         'In Transit',    420,  9850.0, 'KG'),
-(8,  300, 4001,  1001, 'SHP-2025-0008', 'air',   'DDP', '2025-01-22', '2025-01-29', '2025-01-23', '2025-01-28', 'Delivered',      30,  1150.0, 'KG'),
+(8,  300, 4001,  1001, 'SHP-2025-0008', 'air',   'DDP', '2025-01-29', '2025-03-15', '2025-01-23', '2025-02-28', 'Delivered',      30,  1150.0, 'KG'),
 (9,  300, 4001,  1001, 'SHP-2025-0009', 'ocean', 'FOB', '2025-01-25', '2025-02-22', '2025-01-26', NULL,         'In Transit',    270,  6100.0, 'KG'),
 (10, 300, 4001,  1001, 'SHP-2025-0010', 'air',   'EXW', '2025-01-27', '2025-02-01', NULL,         NULL,         'Cancelled',      0,     0.0, 'KG');
-
 
 /****************************************************************************************
 									Vendors Table
@@ -140,7 +174,7 @@ CREATE TABLE vendors (
     city           VARCHAR(50),
     state_region   VARCHAR(50),
     postal_code    VARCHAR(20),
-    country_code   CHAR(2),       -- ISO 3166-1 alpha-2
+    country_code   CHAR(2) NOT NULL,       -- ISO 3166-1 alpha-2
     email          VARCHAR(100),
     phone          VARCHAR(20),
     scac           CHAR(4),      
@@ -169,14 +203,14 @@ INSERT INTO vendors (vendor_id, company_name, contact_first, contact_last,
 DROP TABLE IF EXISTS invoices;
 CREATE TABLE invoices (
 	invoice_id 			INT AUTO_INCREMENT PRIMARY KEY,
-    invoice_number 		VARCHAR(20),
-    invoice_date 		DATE,
-    vendor_id 			INT,
+    invoice_number 		VARCHAR(20) NOT NULL,
+    invoice_date 		DATE NOT NULL,
+    vendor_id 			INT NOT NULL,
     amount 				DECIMAL(8,2),
     currency 			CHAR(3),
     payment_terms 		ENUM("NET30", "NET60", "CIA", "COD", "LC"),
-    shipment_ID 		INT,
-    status 				ENUM('OPEN','CLOSED'),
+    shipment_ID 		INT NOT NULL,
+    status 				ENUM('OPEN','CLOSED') DEFAULT 'OPEN',
     CONSTRAINT FK_shipment FOREIGN KEY (shipment_ID) REFERENCES shipments(shipment_ID),
     CONSTRAINT FK_vendor FOREIGN KEY (vendor_ID) REFERENCES vendors(vendor_ID)
 );
@@ -206,7 +240,7 @@ CREATE TABLE purchase_orders (
     unit_of_measure VARCHAR(10),      -- UOM like 'BOX', 'EA', 'KG'
     unit_price      DECIMAL(10,2),
     total_amount    DECIMAL(12,2) GENERATED ALWAYS AS (unit_price * qty) VIRTUAL,
-    vendor_id       INT,
+    vendor_id       INT NOT NULL,
     po_date         DATE NOT NULL,
     due_date        DATE,
     status          ENUM('OPEN', 'PARTIAL', 'CLOSED', 'CANCELLED') DEFAULT 'OPEN',
@@ -272,13 +306,13 @@ INSERT INTO sales_orders (
 ****************************************************************************************/
 DROP TABLE IF EXISTS payments;
 CREATE TABLE payments (
-	payment_id 		INT AUTO_INCREMENT PRIMARY KEY,
-    invoice_id 		INT NOT NULL,
-    payment_method	ENUM('CHECK', 'ACH', 'WIRE', 'CREDIT_CARD', 'LC') DEFAULT 'CHECK',
+	payment_id 			INT AUTO_INCREMENT PRIMARY KEY,
+    invoice_id 			INT NOT NULL,
+    payment_method		ENUM('CHECK', 'ACH', 'WIRE', 'CREDIT_CARD', 'LC'),
     reference_num 		VARCHAR(30),		-- check, ACH, wire number
-    date 			DATE NOT NULL,
-    amount 			DECIMAL(10,2) NOT NULL,
-    currency 		CHAR(3) DEFAULT 'USD',
+    date 				DATE NOT NULL,
+    amount 				DECIMAL(10,2) NOT NULL,
+    currency 			CHAR(3) DEFAULT 'USD',
     CONSTRAINT FK_invoice FOREIGN KEY (invoice_id) REFERENCES invoices(invoice_id)
 );
 
@@ -296,13 +330,13 @@ INSERT INTO payments (
 ****************************************************************************************/
 DROP TABLE IF EXISTS shipment_documents;
 CREATE TABLE shipment_documents (
-    document_id     INT AUTO_INCREMENT PRIMARY KEY,
-    shipment_id     INT NOT NULL,
-    document_type   ENUM('HBL', 'MBL', 'COMMERCIAL_INVOICE', 'PACKING_LIST', 'AWB'),
-    document_number VARCHAR(50) UNIQUE NOT NULL,  -- HBL12345, MBL-SHA-LAX-001
-    issuer          VARCHAR(100),                 -- Carrier name
-    issue_date      DATE,
-    status          ENUM('ISSUED', 'AMENDED', 'VOID') DEFAULT 'ISSUED',
+    document_id     	INT AUTO_INCREMENT PRIMARY KEY,
+    shipment_id			INT NOT NULL,
+    document_type   	ENUM('HBL', 'MBL', 'COMMERCIAL_INVOICE', 'PACKING_LIST', 'AWB'),
+    document_number 	VARCHAR(50) UNIQUE NOT NULL,  -- HBL12345, MBL-SHA-LAX-001
+    issuer          	VARCHAR(100),                 -- Carrier name
+    issue_date      	DATE NOT NULL,
+    status          	ENUM('ISSUED', 'AMENDED', 'VOID') DEFAULT 'ISSUED',
     CONSTRAINT FK_ship_docs_shipments FOREIGN KEY (shipment_id) REFERENCES shipments(shipment_id)
 );
 
