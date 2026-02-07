@@ -48,20 +48,22 @@
 ```bash
 git clone https://github.com/petrolmonkey/logistics-with-mySQL.git
 mysql -u root -p
+```
+**Terminal(In MySql Client)**
+```bash
 source schema/asian_import_database.sql;
 source queries/02-customer-shipments.sql;
 ```
 ## Optional: Automated ETL Pipeline
-**In Terminal**
+**In Terminal:**
 ```bash
 pip install apache-airflow
 cp dags/csv_to_mysql.py ~/airflow/dags/
 airflow standalone
 ```
 
-**Web Browser**
-Goto Airflow address  → `http://localhost:8080`
-Trigger Pipeline → Airflow DAGS `csv_to_mysql`
+**Web Browser:** Open http://localhost:8080
+**Airflow UI:** Trigger DAG `csv_to_mysql`
 
 ## Explore 
 - **[Create Tables→](./schema/asian_import_database.sql)**
