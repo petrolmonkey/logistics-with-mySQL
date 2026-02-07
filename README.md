@@ -6,9 +6,10 @@
 ## Key Features 
 - **Normalized schema** 3NF with 10 interconnected tables
 - **Foreign key relationships** enforcing data integrity
-- **Business logic** via generated columns, enums, constraints
+- **Business logic** via enums and constraints
 - **Complex JOIN queries** revealing supply chain insights
 - **Realistic sample data** (customers, vendors, shipments from JP/KR/TH→US)
+- **Airflow DAG for ETL pipeline allows scaling to meet demand**
 - **Built with MySQL Workbench 8.0**
 
 
@@ -41,12 +42,26 @@
 
 **Query:** [02-customer-shipments.sql](./queries/02-customer-shipments.sql)
 
-## Quick Start
-1. Clone repo  → `git clone https://github.com/petrolmonkey/logistics-with-mySQL.git`
-2. MySQL       → `mysql -u root -p`
-3. Run schema  → `source schema/asian_import_database.sql;`
-4. Run query   → `source queries/02-customer-shipments.sql;` → See results!
 
+## Quick Start: Create Schema
+**In terminal:**
+```bash
+git clone https://github.com/petrolmonkey/logistics-with-mySQL.git
+mysql -u root -p
+source schema/asian_import_database.sql;
+source queries/02-customer-shipments.sql;
+```
+## Optional: Automated ETL Pipeline
+**In Terminal**
+```bash
+pip install apache-airflow
+cp dags/csv_to_mysql.py ~/airflow/dags/
+airflow standalone
+```
+
+**Web Browser**
+Goto Airflow address  → `http://localhost:8080`
+Trigger Pipeline → Airflow DAGS `csv_to_mysql`
 
 ## Explore 
 - **[Create Tables→](./schema/asian_import_database.sql)**
