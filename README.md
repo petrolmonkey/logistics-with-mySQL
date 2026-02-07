@@ -47,9 +47,10 @@
 **In terminal:**
 ```bash
 git clone https://github.com/petrolmonkey/logistics-with-mySQL.git
+cd logistics-with-MySQL
 mysql -u root -p
 ```
-**Terminal(In MySql Client)**
+**Terminal(In MySql Client):**
 ```bash
 source schema/asian_import_database.sql;
 source queries/02-customer-shipments.sql;
@@ -63,6 +64,7 @@ airflow standalone
 ```
 
 **Web Browser:** Open http://localhost:8080
+
 **Airflow UI:** Trigger DAG `csv_to_mysql`
 
 ## Explore 
