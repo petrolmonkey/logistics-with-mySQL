@@ -12,6 +12,12 @@
 - **Airflow DAG for ETL pipeline allows scaling to meet demand**
 - **Built with MySQL Workbench 8.0**
 
+## Recent Updates (Past Month)
+- Implemented `csv_to_mysql` Airflow DAG for daily ETL of shipments CSV: extract → validate FKs/dates/weights → load to `shipments` table, errors to `shipment_errors`.
+- Added data quality gates (e.g., weight > 0, valid locations from JP/KR/TH).
+- Enhanced monitoring with XCom metrics (rows loaded/rejected) and email alerts on failure.
+- Optimized for scale: multi-row inserts, 5-min timeout, 1 max concurrent run.
+
 
 ## Business Metrics at a Glance
 | Metric           | Value                          | Table        |
